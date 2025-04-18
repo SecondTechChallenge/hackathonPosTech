@@ -1,0 +1,25 @@
+<mat-card style="max-width: 480px; margin: 32px auto; padding: 24px;">
+  <mat-card-title>👤 Cadastro de Professor</mat-card-title>
+
+  <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px;">
+    <mat-form-field appearance="fill">
+      <mat-label>Nome</mat-label>
+      <input matInput [(ngModel)]="nome">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="email" type="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Senha</mat-label>
+      <input matInput type="password" [(ngModel)]="senha">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="cadastrar()">Cadastrar</button>
+    <div style="text-align: center; margin-top: 12px;">
+      <button mat-button color="accent" (click)="irParaLogin()">Voltar para o Login</button>
+    </div>
+  </div>
+</mat-card>

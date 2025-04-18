@@ -1,0 +1,171 @@
+<!-- Card de lançamento de notas -->
+<mat-card class="card-envio" style="max-width: 600px; margin: 0 auto 24px;">
+  <mat-card-title>📝 Lançar Nota de Prova</mat-card-title>
+
+  <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
+    <mat-form-field appearance="fill">
+      <mat-label>Nome do Aluno</mat-label>
+      <input matInput [(ngModel)]="nomeAluno">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Turma</mat-label>
+      <input matInput [(ngModel)]="turma">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Matéria</mat-label>
+      <input matInput [(ngModel)]="materia">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Bimestre</mat-label>
+      <mat-select [(ngModel)]="bimestre">
+        <mat-option *ngFor="let b of [1,2,3,4]" [value]="b"> {{ b }}º Bimestre </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Nota</mat-label>
+      <input matInput type="number" min="0" max="10" [(ngModel)]="nota">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="enviarNota()">
+      {{ editandoId ? 'Atualizar Nota' : 'Salvar Nota' }}
+    </button>
+  </div>
+</mat-card>
+
+<!-- Card de notas lançadas -->
+<mat-card class="card-tabela">
+  <mat-card-title>📋 Notas Lançadas</mat-card-title>
+
+  <!-- Filtros -->
+  <div style="display: flex; gap: 16px; margin: 16px 0; flex-wrap: wrap;">
+    <mat-form-field appearance="fill">
+      <mat-label>Filtrar por Turma</mat-label>
+      <mat-select [(ngModel)]="filtroTurma">
+        <mat-option value="">Todas</mat-option>
+        <mat-option *ngFor="let t of turmasUnicas" [value]="t">{{ t }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Filtrar por Matéria</mat-label>
+      <mat-select [(ngModel)]="filtroMateria">
+        <mat-option value="">Todas</mat-option>
+        <mat-option *ngFor="let m of materiasUnicas" [value]="m">{{ m }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Tabela -->
+  <div id="tabela-provas">
+    <table mat-table [dataSource]="provasFiltradas" class="mat-elevation-z2" style="width: 100%;">
+      <ng-container matColumnDef="aluno">
+        <th mat-header-cell *matHeaderCellDef>Aluno</th>
+        <td mat-cell *matCellDef="let p">{{ p.nomeAluno }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="materia">
+        <th mat-header-cell *matHeaderCellDef>Matéria</th>
+        <td mat-cell *matCellDef="let p">{{ p.materia }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="turma">
+        <th mat-header-cell *matHeaderCellDef>Turma</th>
+        <td mat-cell *matCellDef="let p">{{ p.turma }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="bimestre">
+        <th mat-header-cell *matHeaderCellDef>Bimestre</th>
+        <td mat-cell *matCellDef="let p">{{ p.bimestre }}º</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nota">
+        <th mat-header-cell *matHeaderCellDef>Nota</th>
+        <td mat-cell *matCellDef="let p">{{ p.nota }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let p">
+          <button mat-icon-button color="primary" (click)="editarNota(p)"><mat-icon>edit</mat-icon></button>
+          <button mat-icon-button color="warn" (click)="excluirNota(p.id)"><mat-icon>delete</mat-icon></button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+
+  <div style="text-align: right; margin-top: 12px;">
+    <button mat-stroked-button color="accent" (click)="exportarNotasPorTurmaPDF()">
+      <mat-icon>download</mat-icon> Exportar por Turma
+    </button>
+  </div>
+</mat-card>
+
+<!-- Card do Boletim -->
+<mat-card class="card-tabela" style="margin-top: 24px;">
+  <mat-card-title>📊 Boletim Final</mat-card-title>
+
+  <!-- Filtros do boletim -->
+  <div style="display: flex; gap: 16px; margin: 16px 0; flex-wrap: wrap;">
+    <mat-form-field appearance="fill">
+      <mat-label>Filtrar por Aluno</mat-label>
+      <mat-select [(ngModel)]="filtroBoletimAluno">
+        <mat-option value="">Todos</mat-option>
+        <mat-option *ngFor="let aluno of alunosUnicos" [value]="aluno">{{ aluno }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Filtrar por Matéria</mat-label>
+      <mat-select [(ngModel)]="filtroBoletimMateria">
+        <mat-option value="">Todas</mat-option>
+        <mat-option *ngFor="let mat of materiasUnicas" [value]="mat">{{ mat }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div *ngFor="let aluno of boletimFiltrado | keyvalue">
+    <h3 style="margin-bottom: 4px;">👤 {{ aluno.key }}</h3>
+    <div id="boletim-{{ aluno.key }}">
+      <table mat-table [dataSource]="aluno.value | keyvalue" class="mat-elevation-z1" style="margin-bottom: 24px;">
+        <ng-container matColumnDef="materia">
+          <th mat-header-cell *matHeaderCellDef>Matéria</th>
+          <td mat-cell *matCellDef="let item">{{ item.key }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="media">
+          <th mat-header-cell *matHeaderCellDef>Média</th>
+          <td mat-cell *matCellDef="let item">{{ item.value.media }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let item">
+            <span [ngClass]="{
+              'aprovado': item.value.status === 'Aprovado',
+              'recuperacao': item.value.status === 'Recuperação',
+              'reprovado': item.value.status === 'Reprovado'
+            }">
+              {{ item.value.status }}
+            </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['materia', 'media', 'status']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['materia', 'media', 'status']"></tr>
+      </table>
+    </div>
+
+    <div style="text-align: right;">
+      <button mat-stroked-button color="accent" (click)="exportarBoletimPorAlunoPDF(aluno.key)">
+        <mat-icon>download</mat-icon> Exportar Boletim do Aluno
+      </button>
+    </div>
+  </div>
+</mat-card>

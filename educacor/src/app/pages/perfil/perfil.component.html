@@ -1,0 +1,22 @@
+<mat-card style="max-width: 500px; margin: 40px auto; padding: 24px;">
+  <h2 style="text-align: center;">Perfil do Professor</h2>
+
+  <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 16px;">
+    <mat-label>Nome</mat-label>
+    <input matInput [(ngModel)]="nome" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 16px;">
+    <mat-label>E-mail</mat-label>
+    <input matInput [(ngModel)]="email" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 24px;">
+    <mat-label>Nova senha (opcional)</mat-label>
+    <input matInput type="password" [(ngModel)]="senha" />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" style="width: 100%;" (click)="salvar()">
+    Salvar Alterações
+  </button>
+</mat-card>

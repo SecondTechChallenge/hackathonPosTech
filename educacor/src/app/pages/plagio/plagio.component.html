@@ -1,0 +1,108 @@
+<mat-card class="card-envio card-custom">
+  <mat-card-title class="card-title">🧪 Analisar Arquivo</mat-card-title>
+
+  <div class="form-wrapper">
+    <mat-form-field appearance="fill">
+      <mat-label>Aluno</mat-label>
+      <mat-select [(ngModel)]="filtroAluno">
+        <mat-option value="">Não vinculado</mat-option>
+        <mat-option *ngFor="let aluno of alunosUnicos" [value]="aluno">{{ aluno }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Matéria</mat-label>
+      <mat-select [(ngModel)]="filtroMateria">
+        <mat-option value="">Não informada</mat-option>
+        <mat-option *ngFor="let m of materiasUnicas" [value]="m">{{ m }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Nível de Tolerância (%)</mat-label>
+      <input matInput type="number" [(ngModel)]="regras.tolerancia">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Palavras a Ignorar</mat-label>
+      <input matInput [(ngModel)]="regras.ignorarPalavras">
+    </mat-form-field>
+
+    <div class="botoes-envio">
+      <button mat-stroked-button color="primary" (click)="fileInput.click()">
+        <mat-icon>upload</mat-icon> Selecionar Arquivo
+      </button>
+      <input #fileInput type="file" hidden (change)="onFileSelected($event)">
+      <button mat-raised-button color="accent" (click)="simularAnalise()">Analisar</button>
+    </div>
+
+    <span *ngIf="arquivoUpload" class="arquivo-nome">📎 {{ arquivoUpload.name }}</span>
+    <span *ngIf="resultadoSimulacao" class="resultado">{{ resultadoSimulacao }}</span>
+  </div>
+</mat-card>
+
+<mat-card class="card-tabela">
+  <mat-card-title class="card-title">📁 Histórico de Verificações</mat-card-title>
+  <div class="filtros-historico">
+    <mat-form-field appearance="fill">
+      <mat-label>Data Início</mat-label>
+      <input matInput type="date" [(ngModel)]="filtroDataInicio">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Data Fim</mat-label>
+      <input matInput type="date" [(ngModel)]="filtroDataFim">
+    </mat-form-field>
+  </div>
+
+  <table mat-table [dataSource]="verificacoesFiltradas" class="mat-elevation-z2">
+    <ng-container matColumnDef="data">
+      <th mat-header-cell *matHeaderCellDef>Data</th>
+      <td mat-cell *matCellDef="let v">{{ v.data | date:'shortDate' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="aluno">
+      <th mat-header-cell *matHeaderCellDef>Aluno</th>
+      <td mat-cell *matCellDef="let v">{{ v.aluno }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="materia">
+      <th mat-header-cell *matHeaderCellDef>Matéria</th>
+      <td mat-cell *matCellDef="let v">{{ v.materia }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="arquivo">
+      <th mat-header-cell *matHeaderCellDef>Arquivo</th>
+      <td mat-cell *matCellDef="let v">{{ v.nomeArquivo }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="similaridade">
+      <th mat-header-cell *matHeaderCellDef>Similaridade</th>
+      <td mat-cell *matCellDef="let v">{{ v.similaridade }}%</td>
+    </ng-container>
+
+    <ng-container matColumnDef="acoes">
+      <th mat-header-cell *matHeaderCellDef>Ações</th>
+      <td mat-cell *matCellDef="let v">
+        <button mat-icon-button color="warn" (click)="deletarRegistro(v.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['data', 'aluno', 'materia', 'arquivo', 'similaridade', 'acoes']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['data', 'aluno', 'materia', 'arquivo', 'similaridade', 'acoes']"></tr>
+  </table>
+
+  <div class="botao-exportar">
+    <button mat-stroked-button color="accent" (click)="exportarHistoricoParaPDF()">
+      <mat-icon>download</mat-icon> Exportar Histórico
+    </button>
+  </div>
+</mat-card>
+
+<mat-card class="card-tabela">
+  <mat-card-title class="card-title">📊 Estatísticas de Plágio</mat-card-title>
+  <div class="grafico-container">
+    <canvas baseChart [data]="chartData" [options]="chartOptions" [type]="'bar'"></canvas>
+  </div>
+</mat-card>

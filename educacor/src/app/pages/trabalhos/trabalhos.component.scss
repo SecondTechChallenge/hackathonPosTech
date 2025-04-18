@@ -1,0 +1,50 @@
+.card-envio {
+  max-width: 600px;
+  margin: 24px auto;
+  padding: 24px;
+}
+
+.card-tabela {
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.form-field {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.botoes-upload {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.card-envio mat-card-title {
+  margin-bottom: 16px;
+}
+
+.botoes-upload {
+  display: flex;
+  flex-direction: column; /* 👈 ESSENCIAL */
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 12px;
+}
+
+.layout-container {
+  height: 100%;
+}
+
+.form-field {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.form-field input {
+  padding: 15px 0 0px 0;
+  font-size: 14px;
+}
+

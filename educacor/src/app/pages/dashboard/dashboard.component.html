@@ -1,0 +1,85 @@
+<mat-card class="card-dashboard">
+  <mat-card-title class="card-title">Painel do Professor</mat-card-title>
+
+  <!-- Resumo -->
+  <div class="resumo-grid">
+    <mat-card class="resumo-card">
+      <div class="resumo-icon">📄</div>
+      <div class="resumo-info">
+        <h3>{{ totalTrabalhos }}</h3>
+        <p>Trabalhos</p>
+      </div>
+    </mat-card>
+    <mat-card class="resumo-card">
+      <div class="resumo-icon">📝</div>
+      <div class="resumo-info">
+        <h3>{{ totalProvas }}</h3>
+        <p>Provas</p>
+      </div>
+    </mat-card>
+    <mat-card class="resumo-card">
+      <div class="resumo-icon">👩‍🎓</div>
+      <div class="resumo-info">
+        <h3>{{ totalAlunos }}</h3>
+        <p>Alunos</p>
+      </div>
+    </mat-card>
+    <mat-card class="resumo-card">
+      <div class="resumo-icon">✅</div>
+      <div class="resumo-info">
+        <h3>{{ taxaAprovacao }}%</h3>
+        <p>Taxa de Aprovação</p>
+      </div>
+    </mat-card>
+  </div>
+
+
+
+  <!-- Atividades Recentes -->
+  <mat-card class="card-dashboard">
+    <mat-card-title class="card-title">🕒 Últimas Atividades</mat-card-title>
+    <mat-list>
+      <mat-list-item *ngFor="let atividade of atividadesRecentes">
+        <mat-icon matListIcon>history</mat-icon>
+        <span matLine class="descricao">{{ atividade.descricao }}</span>
+        <span matLine class="data">{{ atividade.data | date:'short' }}</span>
+      </mat-list-item>
+
+
+
+    </mat-list>
+  </mat-card>
+
+
+
+  <!-- Progresso com gráficos -->
+  <mat-card class="card-dashboard">
+    <mat-card-title class="card-title">📈 Progresso Geral</mat-card-title>
+    <div class="grafico-progresso">
+      <p>Correção de Trabalhos</p>
+      <mat-progress-bar mode="determinate" [value]="percentualTrabalhos"></mat-progress-bar>
+      <p>Correção de Provas</p>
+      <mat-progress-bar mode="determinate" color="accent" [value]="percentualProvas"></mat-progress-bar>
+    </div>
+  </mat-card>
+
+  <!-- Ações rápidas -->
+  <mat-card class="card-dashboard">
+    <mat-card-title class="card-title">🚀 Próximas Ações</mat-card-title>
+    <mat-list>
+      <mat-list-item routerLink="/trabalhos">
+        <mat-icon matListIcon>upload</mat-icon>
+        <span class="acao-texto">Enviar novo trabalho</span>
+      </mat-list-item>
+      <mat-list-item routerLink="/provas">
+        <mat-icon matListIcon>grading</mat-icon>
+        <span class="acao-texto">Lançar notas de prova</span>
+      </mat-list-item>
+      <mat-list-item routerLink="/plagio">
+        <mat-icon matListIcon>report</mat-icon>
+        <span class="acao-texto">Verificações de plágio</span>
+      </mat-list-item>
+    </mat-list>
+
+  </mat-card>
+</mat-card>

@@ -1,0 +1,61 @@
+.layout-container {
+  height: auto;
+  min-height: 100vh;
+  display: block;
+}
+
+.sidenav {
+  width: 250px;
+  background: #FFCC80; /* cor secundária */
+}
+
+.toolbar-title {
+  font-weight: 600;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.content-area {
+  padding: 16px;
+  background: #FAFAFA;
+  min-height: calc(100vh - 64px); /* altura mínima menos a toolbar */
+  box-sizing: border-box;
+}
+
+.sidenav a.mat-list-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mat-icon {
+  vertical-align: middle;
+  font-size: 20px;
+}
+
+.sidenav a.mat-list-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease, border-left 0.3s ease, color 0.3s ease;
+}
+
+.sidenav a.mat-list-item.active {
+  background-color: #ffe0b2;
+  font-weight: bold;
+  border-left: 4px solid #fb8c00;
+  transition: background-color 0.3s ease, border-left 0.3s ease, color 0.3s ease;
+}
+
+.sidenav a.mat-list-item.active mat-icon {
+  color: #fb8c00;
+  transition: color 0.3s ease;
+}
+
+.sidenav a.mat-list-item:hover {
+  background-color: #ffecb3; /* tom suave ao passar o mouse */
+  transition: background-color 0.2s ease-in-out;
+}
+

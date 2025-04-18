@@ -1,0 +1,72 @@
+<div class="page-configuracoes">
+  <mat-card class="config-card">
+    <mat-card-title>Informações da Conta</mat-card-title>
+    <mat-form-field appearance="fill">
+      <mat-label>Nome</mat-label>
+      <input matInput [(ngModel)]="nome">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="email">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Nova Senha</mat-label>
+      <input matInput type="password" [(ngModel)]="novaSenha">
+    </mat-form-field>
+    <button mat-stroked-button color="primary" (click)="salvarConta()">Salvar</button>
+  </mat-card>
+
+  <mat-card class="config-card">
+    <mat-card-title>Preferências de Interface</mat-card-title>
+    <mat-form-field appearance="fill">
+      <mat-label>Tema</mat-label>
+      <mat-select [(ngModel)]="tema" (selectionChange)="aplicarTema(tema)">
+        <mat-option *ngFor="let t of temasDisponiveis" [value]="t">{{ t | titlecase }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Idioma</mat-label>
+      <mat-select [(ngModel)]="idioma">
+        <mat-option *ngFor="let i of idiomasDisponiveis" [value]="i.codigo">{{ i.nome }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Tamanho da Fonte</mat-label>
+      <mat-select [(ngModel)]="fonte">
+        <mat-option *ngFor="let f of fontesDisponiveis" [value]="f">{{ f }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-stroked-button color="primary" (click)="salvarPreferencias()">Salvar</button>
+  </mat-card>
+
+  <mat-card class="config-card">
+    <mat-card-title>Notificações</mat-card-title>
+    <mat-checkbox [(ngModel)]="notificarTrabalhos">Trabalhos Recebidos</mat-checkbox>
+    <mat-checkbox [(ngModel)]="notificarCorrecao">Correções Concluídas</mat-checkbox>
+    <mat-checkbox [(ngModel)]="notificarRelatorios">Relatórios Semanais</mat-checkbox>
+    <button mat-stroked-button color="primary" (click)="salvarNotificacoes()">Salvar</button>
+  </mat-card>
+
+  <mat-card class="config-card">
+    <mat-card-title>Exportação e Backup</mat-card-title>
+    <p>Você pode exportar todos os dados da sua conta e preferências para um arquivo JSON.</p>
+    <button mat-raised-button color="accent" (click)="exportarDados()">
+      <mat-icon>file_download</mat-icon>
+      Exportar Configurações
+    </button>
+  </mat-card>
+
+  <mat-card class="config-card">
+    <mat-card-title>Segurança</mat-card-title>
+    <p>Gerencie sessões e exclusão da conta.</p>
+    <button mat-stroked-button color="warn" (click)="encerrarSessoes()">Encerrar Outras Sessões</button>
+    <button mat-flat-button color="warn" (click)="confirmarExclusaoConta()">Excluir Conta</button>
+  </mat-card>
+
+  <mat-card class="config-card">
+    <mat-card-title>Extras</mat-card-title>
+    <mat-checkbox [(ngModel)]="usarIA">Simulação com Inteligência Artificial</mat-checkbox>
+    <mat-checkbox [(ngModel)]="verificarPlagio">Verificação de Plágio</mat-checkbox>
+    <button mat-stroked-button color="primary" (click)="salvarExtras()">Salvar Extras</button>
+  </mat-card>
+</div>

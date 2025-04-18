@@ -1,0 +1,54 @@
+.card-envio, .card-tabela {
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  background-color: #fff;
+  margin-bottom: 24px;
+
+  mat-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.aprovado {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.recuperacao {
+  color: #f9a825;
+  font-weight: 600;
+}
+
+.reprovado {
+  color: #c62828;
+  font-weight: 600;
+}
+
+table {
+  width: 100%;
+  margin-bottom: 16px;
+
+  th {
+    font-weight: bold;
+  }
+
+  td, th {
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .card-envio {
+    margin: 16px;
+  }
+}
